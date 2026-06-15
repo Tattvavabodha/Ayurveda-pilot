@@ -1,0 +1,405 @@
+{
+  "title": "Ashtanga Hridayam Verse Analysis",
+  "verses": [
+    {
+      "id": "verse-1",
+      "originalVerse": "आयुः कामयमानेन धर्मार्थसुखसाधनम्।\nआयुर्वेदोपदेशेषु विधेयः परमादरः॥",
+      "anvaya": "धर्मार्थसुखसाधनम् आयुः कामयमानेन (पुरुषेण) आयुर्वेदोपदेशेषु परमादरः विधेयः।",
+      "saralartha": {
+        "english": "By a person desiring a long life—which is the fundamental instrument for achieving Dharma (righteousness), Artha (wealth/purpose), and Sukha (happiness)—the utmost respect and obedience should be directed towards the teachings of Ayurveda."
+      },
+      "padaccheda": [
+        {
+          "word": "आयुः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "आयुः (āyuḥ)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "आयुस् (āyus) - Neuter gender",
+            "Declension": "Dvitīyā Vibhakti, Ekavacana (Accusative singular). It acts as the object of the participle kāmayamānena.",
+            "Derivation": "Root इण् (iṇ gatau - to go/progress) + उणि / उसि (uṇi / usi) suffix via Uṇādi sūtras."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "कामयमानेन",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "कामयमानेन (kāmayamānena)",
+            "Type": "Participle / Kṛdanta",
+            "Root": "कम् (kam - kāntau, to desire)",
+            "Suffix": "णिच् (ṇic - causative/svārthe) + शप् (śap) + शानच् (śānac - present middle participle / ātmanepada). Forms kāmayamāna.",
+            "Declension": "Tṛtīyā Vibhakti, Ekavacana (Instrumental singular), masculine. It qualifies the implied subject \"by the person\" (puruṣeṇa)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "धर्म-अर्थ-सुख-साधनम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "धर्मार्थसुखसाधनम् (dharmārthasukhasādhanam)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Dvandva: धर्मश्च अर्थश्च सुखं च इति धर्मार्थसुखानि (Dharma, Artha, and Sukha). Ṣaṣṭhī Tatpuruṣa: तेषां साधनम् इति धर्मार्थसुखसाधनम् (The instrument/means of them).",
+            "Declension": "Dvitīyā Vibhakti, Ekavacana (Accusative singular), neuter. It functions as an adjective modifying āyuḥ."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "आयुर्वेद-उपदेशेषु",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "आयुर्वेदोपदेशेषु (āyurvedopadeśeṣu)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Ṣaṣṭhī Tatpuruṣa: आयुर्वेदस्य उपदेशाः इति आयुर्वेदोपदेशाः (The teachings of Ayurveda).",
+            "Declension": "Saptamī Vibhakti, Bahuvacana (Locative plural), masculine. Meaning \"in the teachings of Ayurveda\"."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "विधेयः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "विधेयः (vidheyaḥ)",
+            "Type": "Potential Passive Participle / Kṛtya Pratyaya",
+            "Root": "Prefix वि (vi) + Root धा (dhā - dhāraṇapoṣaṇayoḥ, to hold/put/perform).",
+            "Suffix": "यत् (yat - indicating \"should be done\").",
+            "Declension": "Prathamā Vibhakti, Ekavacana (Nominative singular), masculine."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "परम-आदरः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "परमादरः (paramādaraḥ)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Karmadhāraya: परमश्च असौ आदरश्च इति परमादरः (Utmost respect).",
+            "Declension": "Prathamā Vibhakti, Ekavacana (Nominative singular), masculine."
+          }
+        },
+        { "word": "॥", "hasGrammar": false }
+      ]
+    },
+    {
+      "id": "verse-2",
+      "originalVerse": "ब्रह्मा स्मृत्वाऽयुषो वेदं प्रजापतिमजिग्रहत्।\nसोऽश्विनौ तौ सहस्राक्षं सोऽत्रिपुत्रादिकान् मुनीन्॥\nतेऽग्निवेशादिकांस्ते तु पृथक् तन्त्राणि तेनिरे।",
+      "anvaya": "ब्रह्मा आयुषः वेदं स्मृत्वा प्रजापतिम् अजिग्रहत्। सः (प्रजापतिः) अश्विनौ (अजिग्रहत्)। तौ (अश्विनौ) सहस्राक्षं (अजिग्रहाताम्)। सः (सहस्राक्षः) अत्रिपुत्रादिकान् मुनीन् (अजिग्रहत्)। ते (अत्रिपुत्रादयः) अग्निवेशादिकान् (अजिग्रहन्)। ते तु (अग्निवेशादयः) पृथक् तन्त्राणि तेनिरे।",
+      "saralartha": {
+        "english": "Lord Brahma, having recalled the knowledge of life (Ayurveda), taught it to Prajapati (Daksha). He (Prajapati) taught it to the Ashvini Kumaras. Those two taught it to Sahasraksha (Indra, the thousand-eyed one). He (Indra) taught it to the sages headed by the son of Atri (Punarvasu Atreya). They (Atreya and others) taught it to Agnivesha and his peers. And those disciples (Agnivesha, Bhela, etc.) then individually composed their own separate treatises."
+      },
+      "padaccheda": [
+        {
+          "word": "ब्रह्मा",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "ब्रह्मा (brahmā)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "ब्रह्मन् (brahman) - Masculine gender.",
+            "Declension": "Prathamā Vibhakti, Ekavacana (Nominative singular). Subject of the sentence.",
+            "Derivation": "Root बृंह् (bṛṃh - to grow/expand) + मनिन् (manin) suffix."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "स्मृत्वा",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "स्मृत्वा (smṛtvā)",
+            "Type": "Indeclinable Participle (Avyaya / Kṛdanta)",
+            "Root": "स्मृ (smṛ - cintāyām, to remember).",
+            "Suffix": "क्त्वा (ktvā - indicating an action completed before the main action). Meaning: \"Having remembered\"."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "आयुषः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "आयुषः (āyuṣaḥ)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "आयुस् (āyus) - Neuter gender.",
+            "Declension": "Ṣaṣṭhī Vibhakti, Ekavacana (Genitive singular). Modifies vedam (\"knowledge of life\")."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "वेदम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "वेदम् (vedam)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "वेद (veda) - Masculine gender.",
+            "Derivation": "Root विद् (vid - jñāne, to know) + घञ् (ghañ) suffix.",
+            "Declension": "Dvitīyā Vibhakti, Ekavacana (Accusative singular). Object of the participle smṛtvā."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "प्रजापतिम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "प्रजापतिम् (prajāpatim)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Ṣaṣṭhī Tatpuruṣa: प्रजानां पतिः इति प्रजापतिः (Lord of the creatures).",
+            "Declension": "Dvitīyā Vibhakti, Ekavacana (Accusative singular). Direct object of the verb ajigrahat."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अजिग्रहत्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अजिग्रहत् (ajigrahat)",
+            "Type": "Verb (Tiṅanta)",
+            "Root": "ग्रह् (grah - upādāne, to take or grasp).",
+            "Form": "Causative (णिच् - ṇic) base meaning \"to cause to grasp\" (i.e., to teach).",
+            "Conjugation": "लुङ् लकार (Luṅ lakāra - Aorist / past tense), Prathama Puruṣa, Ekavacana (Third-person singular). The addition of ṇic followed by caṅ causes reduplication (abhyāsa), changing grah to jigrah, with the past tense augment a, yielding ajigrahat (\"he taught / made him grasp\")."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "सः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "सः (saḥ)",
+            "Type": "Pronoun (Sarvanāma)",
+            "Base Word": "तद् (tad) - Masculine gender.",
+            "Declension": "Prathamā Ekavacana (He)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अश्विनौ",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अश्विनौ (aśvinau)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "अश्विन् (aśvin) - Masculine gender.",
+            "Declension": "Dvitīyā Vibhakti, Dvivacana (Accusative dual). \"To the two Ashvins\"."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "तौ",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "तौ (tau)",
+            "Type": "Pronoun (Sarvanāma)",
+            "Base Word": "तद् (tad) - Masculine gender.",
+            "Declension": "Prathamā Dvivacana (They two)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "सहस्राक्षम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "सहस्राक्षम् (sahasrākṣam)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Bahuvrīhi: सहस्रम् अक्षिणी यस्य सः (He who has a thousand eyes - Indra). According to Pāṇini, the word akṣi (eye) changes to akṣa at the end of a Bahuvrīhi compound via the ṣac suffix.",
+            "Declension": "Dvitīyā Vibhakti, Ekavacana (Accusative singular)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "सः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "सः (saḥ)",
+            "Type": "Pronoun (Sarvanāma)",
+            "Base Word": "तद् (tad) - Masculine gender.",
+            "Declension": "Prathamā Ekavacana (He)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अत्रि-पुत्र-आदिकान्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अत्रिपुत्रादिकान् (atriputrādikān)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Ṣaṣṭhī Tatpuruṣa: अत्रेः पुत्रः (The son of Atri). Bahuvrīhi: अत्रिपुत्रः आदिः येषां ते (Those whose beginning/head is the son of Atri).",
+            "Declension": "Dvitīyā Vibhakti, Bahuvacana (Accusative plural)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "मुनीन्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "मुनीन् (munīn)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "मुनि (muni) - Masculine gender.",
+            "Declension": "Dvitīyā Vibhakti, Bahuvacana (Accusative plural). \"To the sages\"."
+          }
+        },
+        { "word": "॥", "hasGrammar": false },
+        {
+          "word": "ते",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "ते (te)",
+            "Type": "Pronoun (Sarvanāma)",
+            "Base Word": "तद् (tad) - Masculine gender.",
+            "Declension": "Prathamā Bahuvacana (They)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अग्निवेश-आदिकान्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अग्निवेशादिकान् (agniveśādikān)",
+            "Type": "Compound Noun (Samāsa)",
+            "Samāsa Breakdown": "Bahuvrīhi: अग्निवेशः आदिः येषां ते (Those headed by Agnivesha).",
+            "Declension": "Dvitīyā Vibhakti, Bahuvacana (Accusative plural)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "ते",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "ते (te)",
+            "Type": "Pronoun (Sarvanāma)",
+            "Base Word": "तद् (tad) - Masculine gender.",
+            "Declension": "Prathamā Bahuvacana (They)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "तु",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "तु (tu)",
+            "Type": "Indeclinable (Avyaya)",
+            "Meaning": "but/and (often used for metrical padding or continuity)."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "पृथक्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "पृथक् (pṛthak)",
+            "Type": "Indeclinable (Avyaya)",
+            "Meaning": "separately/individually."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "तन्त्राणि",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "तन्त्राणि (tantrāṇi)",
+            "Type": "Noun (Subanta)",
+            "Base Word": "तन्त्र (tantra) - Neuter gender.",
+            "Declension": "Dvitīyā Vibhakti, Bahuvacana (Accusative plural). \"The treatises\"."
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "तेनिरे",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "तेनिरे (tenire)",
+            "Type": "Verb (Tiṅanta)",
+            "Root": "तन् (tan - vistāre, to stretch, spread, or compose).",
+            "Conjugation": "लिट् लकार (Liṭ lakāra - Perfect past tense), Ātmanepada, Prathama Puruṣa, Bahuvacana (Third-person plural). Forms tenire (\"they composed/expanded\")."
+          }
+        },
+        { "word": "।", "hasGrammar": false }
+      ]
+    },
+    {
+      "id": "verse-3",
+      "originalVerse": "तेभ्योऽतिविप्रकीर्णेभ्यः प्रायः सारतरोच्चयः।\nक्रियतेऽष्टाङ्गहृदयं नातिसङ्क्षेपविस्तरम्॥",
+      "anvaya": "अतिविप्रकीर्णेभ्यः तेभ्यः (तन्त्रेभ्यः) प्रायः सारतरोच्चयः (कृत्वा) नातिसङ्क्षेपविस्तरम् 'अष्टाङ्गहृदयम्' क्रियते।",
+      "saralartha": {
+        "english": "From those highly scattered and extensive treatises, gathering mostly the most excellent essential elements, this text named Ashtanga Hridayam is being created, which is neither too concise nor too elaborately expanded.",
+        "sanskrit": "अतीव विस्तृतेभ्यः विक्षिप्तेभ्यश्च तेभ्यः प्राचीनायुर्वेदतन्त्रेभ्यः मुख्यतया उत्कृष्टसारभागं सङ्गृह्य मया (वाग्भटेन) 'अष्टाङ्गहृदयम्' नामकं नूतनं तन्त्रं रचयते। एतत् तन्त्रम् अतीव सङ्क्षिप्तम् अपि नास्ति तथा अतीव विस्तृतम् अपि नास्ति।"
+      },
+      "padaccheda": [
+        {
+          "word": "तेभ्यः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "तेभ्यः",
+            "पदम्": "सर्वनाम (तद्-शब्द), नपुंसकलिङ्ग।",
+            "विभक्तिः / वचनम्": "पञ्चमी-विभक्तिः, बहुवचनम्।",
+            "विशेषम्": "'तन्त्रेभ्यः' इति लुप्तविशेष्यस्य विशेषणम्।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अतिविप्रकीर्णेभ्यः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अतिविप्रकीर्णेभ्यः",
+            "पदम्": "सुबन्त, नपुंसकलिङ्ग।",
+            "विभक्तिः / वचनम्": "पञ्चमी-विभक्तिः, बहुवचनम्।",
+            "समासः": "अतिशयेन विप्रकीर्णानि इति अतिविप्रकीर्णानि (प्रादि-समासः)।",
+            "प्रकृति-प्रत्ययौ": "वि + प्र + कृ (विक्षेपे) + क्त (कर्मणि)।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "प्रायः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "प्रायः",
+            "पदम्": "अव्यय।",
+            "अर्थः": "बाहुल्येन / मुख्यतया।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "सारतर-उच्चयः",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "सारतरोच्चयः",
+            "पदम्": "सुबन्त, पुंलिङ्ग।",
+            "विभक्तिः / वचनम्": "प्रथमा-विभक्तिः, एकवचनम्।",
+            "समासः": "सारतरस्य उच्चयः इति सारतरोच्चयः (षष्ठी-तत्पुरुष-समासः)।",
+            "प्रकृति-प्रत्ययौ": "'सार' शब्दात् तरप्-प्रत्ययः (सारतर)। उद् + चि (चयने) + अच्/घञ् (उच्चय)।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "क्रियते",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "क्रियते",
+            "पदम्": "तिङन्त।",
+            "प्रकृति-प्रत्ययौ": "कृ (डुकृञ् करणे) + यक् (कर्मणि विकरणम्) + ते (आत्मनेपद-प्रत्ययः)।",
+            "लकारः / पुरुषः / वचनम्": "लट्-लकारः, प्रथम-पुरुषः, एकवचनम्।",
+            "प्रयोगः": "कर्मणि-प्रयोगः।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "अष्टाङ्गहृदयम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "अष्टाङ्गहृदयम्",
+            "पदम्": "सुबन्त, नपुंसकलिङ्ग।",
+            "विभक्तिः / वचनम्": "प्रथमा-विभक्तिः, एकवचनम् (कर्मणि-प्रयोगे कर्मणि प्रथमा)।",
+            "समासः": "१. अष्टौ अङ्गानि यस्य तत् अष्टाङ्गम् (बहुव्रीहि-समासः)। २. अष्टाङ्गस्य हृदयम् इति अष्टाङ्गहृदयम् (षष्ठी-तत्पुरुष-समासः)।"
+          }
+        },
+        { "word": "।", "hasGrammar": false },
+        {
+          "word": "न-अतिसङ्क्षेप-विस्तरम्",
+          "hasGrammar": true,
+          "grammar": {
+            "title": "नातिसङ्क्षेपविस्तरम्",
+            "पदम्": "सुबन्त, नपुंसकलिङ्ग। 'अष्टाङ्गहृदयम्' इत्यस्य विशेषणम्।",
+            "विभक्तिः / वचनम्": "प्रथमा-विभक्तिः, एकवचनम्।",
+            "समासः": "१. सङ्क्षेपश्च विस्तरश्च इति सङ्क्षेपविस्तरौ (इतरेतर-द्वन्द्व-समासः)। २. अतिशयितौ सङ्क्षेपविस्तरौ यस्मिन् तत् अतिसङ्क्षेपविस्तरम् (बहुव्रीहि-समासः)। ३. न अतिसङ्क्षेपविस्तरम् इति नातिसङ्क्षेपविस्तरम् (नञ्-तत्पुरुष-समासः)।"
+          }
+        },
+        { "word": "॥", "hasGrammar": false }
+      ]
+    }
+  ]
+}
