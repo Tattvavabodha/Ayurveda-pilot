@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="sa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayurveda Text Digitalization Pilot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #fbf9f6;
+            color: #2d2d2d;
+            max-width: 750px;
+            margin: 50px auto;
+            padding: 0 20px;
+            line-height: 1.7;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #eadecc;
+            padding-bottom: 20px;
+        }
+        h1 {
+            color: #8a3324;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            color: #666;
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+        .verse-card {
+            background: #ffffff;
+            border: 1px solid #eadecc;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .verse-number {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #a06054;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        .verse-sanskrit {
+            font-size: 1.4rem;
+            color: #111111;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 15px;
+            background-color: #fffdfa;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .translation-box {
+            border-top: 1px dashed #ebdcc7;
+            padding-top: 15px;
+            font-size: 1rem;
+            color: #4a4a4a;
+        }
+        .translation-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #888;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 id="main-title">Ayurveda Digital Text</h1>
+        <div class="subtitle" id="sub-title">Pilot Project</div>
+    </header>
+
+    <main id="verses-container"></main>
+
+    <script>
+        // FETCH DATA: This tells the page to look at your data.json file
+        fetch('data.json')
+            .then(response => response.json())
+            .then(projectData => {
+                // Update page titles from JSON
+                document.getElementById('main-title').innerText = projectData.text_name;
+                document.getElementById('sub-title').innerText = projectData.section_or_sthana;
+
+                const container = document.getElementById('verses-container');
+
+                // Loop through every verse in the JSON array
+                projectData.verses.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'verse-card';
+                    
+                    card.innerHTML = `
+                        <div class="verse-number">Chapter ${item.chapter} • Verse ${item.number}</div>
+                        <div class="verse-sanskrit">${item.sanskrit}</div>
+                        <div class="translation-box">
+                            <div class="translation-label">English Translation:</div>
+                            <div>${item.translation}</div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            })
+            .catch(error => {
+                console.error("Error loading verses:", error);
+                document.getElementById('verses-container').innerHTML = "<p>Error loading data. Check if data.json exists.</p>";
+            });
+    </script>
+</body>
+</html>
