@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayurveda Text Digitalization Pilot</title>
+    <title>Ashtanga Hridayam Analysis</title>
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #fbf9f6;
             color: #2d2d2d;
-            max-width: 750px;
-            margin: 50px auto;
+            max-width: 800px;
+            margin: 40px auto;
             padding: 0 20px;
             line-height: 1.7;
         }
@@ -20,96 +20,174 @@
             border-bottom: 2px solid #eadecc;
             padding-bottom: 20px;
         }
-        h1 {
-            color: #8a3324;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            color: #666;
-            font-style: italic;
-            font-size: 0.95rem;
-        }
+        h1 { color: #8a3324; font-weight: 500; margin-bottom: 5px; }
         .verse-card {
             background: #ffffff;
             border: 1px solid #eadecc;
             border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
         }
-        .verse-number {
+        .section-title {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #a06054;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
-        .verse-sanskrit {
-            font-size: 1.4rem;
+        .verse-block {
+            font-size: 1.5rem;
             color: #111111;
             text-align: center;
             font-weight: 500;
-            margin-bottom: 15px;
             background-color: #fffdfa;
-            padding: 15px;
+            padding: 20px;
+            border-radius: 6px;
+            border: 1px solid #f3ebe1;
+            white-space: pre-line;
+            margin-bottom: 20px;
+        }
+        .interactive-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 10px;
+            background: #fdfcfb;
             border-radius: 4px;
         }
-        .translation-box {
-            border-top: 1px dashed #ebdcc7;
-            padding-top: 15px;
-            font-size: 1rem;
-            color: #4a4a4a;
+        .word-token {
+            font-size: 1.25rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: default;
+            transition: all 0.2s;
         }
-        .translation-label {
-            font-size: 0.8rem;
+        .word-token.has-grammar {
+            color: #8a3324;
+            background: #f7ede2;
+            cursor: pointer;
+            border-bottom: 2px solid #cdb49b;
+        }
+        .word-token.has-grammar:hover {
+            background: #ebd2ba;
+        }
+        .info-box {
+            background: #fcfbfa;
+            border-left: 4px solid #8a3324;
+            padding: 15px 20px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        .grammar-panel {
+            display: none;
+            background: #fff9f3;
+            border: 1px solid #e2cfb9;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 15px;
+        }
+        .grammar-title {
             font-weight: bold;
-            color: #888;
-            text-transform: uppercase;
+            color: #8a3324;
+            font-size: 1.1rem;
+            border-bottom: 1px dashed #e2cfb9;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .grammar-row {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        .grammar-label {
+            font-weight: bold;
+            color: #666;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 id="main-title">Ayurveda Digital Text</h1>
-        <div class="subtitle" id="sub-title">Pilot Project</div>
+        <h1 id="main-title">Ayurveda Text Analysis</h1>
     </header>
 
     <main id="verses-container"></main>
 
     <script>
-        // FETCH DATA: This tells the page to look at your data.json file
         fetch('data.json')
             .then(response => response.json())
             .then(projectData => {
-                // Update page titles from JSON
-                document.getElementById('main-title').innerText = projectData.text_name;
-                document.getElementById('sub-title').innerText = projectData.section_or_sthana;
-
+                document.getElementById('main-title').innerText = projectData.title;
                 const container = document.getElementById('verses-container');
 
-                // Loop through every verse in the JSON array
-                projectData.verses.forEach(item => {
+                projectData.verses.forEach((item, vIndex) => {
                     const card = document.createElement('div');
                     card.className = 'verse-card';
                     
-                    card.innerHTML = `
-                        <div class="verse-number">Chapter ${item.chapter} • Verse ${item.number}</div>
-                        <div class="verse-sanskrit">${item.sanskrit}</div>
-                        <div class="translation-box">
-                            <div class="translation-label">English Translation:</div>
-                            <div>${item.translation}</div>
+                    // Generate Unique IDs for dynamic elements
+                    const grammarPanelId = `grammar-panel-${vIndex}`;
+
+                    // Base structures
+                    let htmlContent = `
+                        <div class="section-title">Verse ${vIndex + 1}</div>
+                        <div class="verse-block">${item.originalVerse}</div>
+                        
+                        <div class="section-title">Anvaya (Prose Order)</div>
+                        <div class="info-box">${item.anvaya}</div>
+                        
+                        <div class="section-title">Translation</div>
+                        <div class="info-box">
+                            <strong>English:</strong> ${item.saralartha.english}
+                            ${item.saralartha.sanskrit ? `<br><br><strong>Sanskrit Saralartha:</strong> ${item.saralartha.sanskrit}` : ''}
                         </div>
+
+                        <div class="section-title" style="margin-top:25px;">Padaccheda (Click highlighted words for grammar)</div>
+                        <div class="interactive-words" id="words-mix-${vIndex}"></div>
+                        
+                        <div class="grammar-panel" id="${grammarPanelId}"></div>
                     `;
                     
+                    card.innerHTML = htmlContent;
                     container.appendChild(card);
+
+                    // Add interactive words
+                    const wordsMixer = document.getElementById(`words-mix-${vIndex}`);
+                    const panel = document.getElementById(grammarPanelId);
+
+                    item.padaccheda.forEach(p => {
+                        const token = document.createElement('span');
+                        token.className = 'word-token';
+                        token.innerText = p.word;
+
+                        if (p.hasGrammar) {
+                            token.className += ' has-grammar';
+                            token.addEventListener('click', () => {
+                                // Clear old text inside panel
+                                panel.innerHTML = `<div class="grammar-title">${p.grammar.title || p.word}</div>`;
+                                
+                                // Dynamic breakdown of any properties present in grammar dictionary
+                                Object.keys(p.grammar).forEach(key => {
+                                    if (key !== 'title') {
+                                        const row = document.createElement('div');
+                                        row.className = 'grammar-row';
+                                        row.innerHTML = `<span class="grammar-label">${key}:</span> ${p.grammar[key]}`;
+                                        panel.appendChild(row);
+                                    }
+                                });
+                                panel.style.display = 'block';
+                                panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                            });
+                        }
+                        wordsMixer.appendChild(token);
+                    });
                 });
             })
-            .catch(error => {
-                console.error("Error loading verses:", error);
-                document.getElementById('verses-container').innerHTML = "<p>Error loading data. Check if data.json exists.</p>";
+            .catch(err => {
+                console.error(err);
+                document.getElementById('verses-container').innerHTML = "<p>Failed to parse data.json setup.</p>";
             });
     </script>
 </body>
