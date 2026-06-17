@@ -157,30 +157,25 @@
     <div class="site-title" id="site-main-title">आयुर्वेदमहोदधिः</div>
     <div class="breadcrumb" id="breadcrumb-bar" style="display:none;"></div>
 
-    <!-- Home View -->
     <div id="view-home" class="view-section active">
         <div class="box-grid" id="samhita-grid"></div>
     </div>
 
-    <!-- Sthana View -->
     <div id="view-sthana" class="view-section">
         <h2>Select Sthana</h2>
         <div id="sthana-list"></div>
     </div>
 
-    <!-- Adhyaya View -->
     <div id="view-adhyaya" class="view-section">
         <h2>Select Adhyaya</h2>
         <div id="adhyaya-list"></div>
     </div>
 
-    <!-- Verse List View -->
     <div id="view-verselist" class="view-section">
         <h2>Select Verse</h2>
         <div id="verse-list"></div>
     </div>
 
-    <!-- Complete Verse Analysis Reader Dashboard -->
     <div id="view-versereader" class="view-section">
         <div class="verse-display" id="reader-verse-text"></div>
 
@@ -228,12 +223,22 @@
         let database = null;
         let path = { samhita: null, sthana: null, adhyaya: null, verse: null };
 
+        // Safer reading script with fallbacks for key names
         fetch('data.json')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Could not find data.json file.");
+                return res.json();
+            })
             .then(data => {
                 database = data;
-                document.getElementById('site-main-title').innerText = data.site_title;
+                // Fallback safe assignment
+                const title = data.site_title || data.title || "आयुर्वेदमहोदधिः";
+                document.getElementById('site-main-title').innerText = title;
                 initHome();
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('samhita-grid').innerHTML = `<p style="color:red; font-weight:bold; text-align:center;">Error loading data file. Make sure your data file is exactly named "data.json" and contains valid text structure.</p>`;
             });
 
         function showView(viewId) {
@@ -247,7 +252,10 @@
             if (!path.samhita) { bar.style.display = 'none'; return; }
             bar.style.display = 'block';
             let html = `<span onclick="resetToHome()">Home</span>`;
-            if (path.samhita) html += ` &gt; <span onclick="loadSamhita('${path.samhita.id}')">${path.samhita.name_devanagari}</span>`;
+            if (path.samhita) {
+                const sName = path.samhita.name_devanagari || path.samhita.title || "Samhita";
+                html += ` &gt; <span onclick="loadSamhita('${path.samhita.id}')">${sName}</span>`;
+            }
             if (path.sthana) html += ` &gt; <span onclick="loadSthana('${path.sthana.name}')">${path.sthana.name}</span>`;
             if (path.adhyaya) html += ` &gt; <span onclick="loadAdhyaya('${path.adhyaya.name}')">${path.adhyaya.name.split(':')[0]}</span>`;
             bar.innerHTML = html;
@@ -261,13 +269,24 @@
         function initHome() {
             const grid = document.getElementById('samhita-grid');
             grid.innerHTML = '';
-            database.samhitas.forEach(s => {
+            
+            const samhitasList = database.samhitas || [];
+            if(samhitasList.length === 0) {
+                grid.innerHTML = "<p>No texts found in the database layer.</p>";
+                return;
+            }
+
+            samhitasList.forEach(s => {
                 const card = document.createElement('div');
                 card.className = 'clickable-card';
                 card.onclick = () => loadSamhita(s.id);
+                
+                const devanagari = s.name_devanagari || s.title || "Text Name";
+                const iast = s.name_iast || "";
+                
                 card.innerHTML = `
-                    <div class="card-devanagari">${s.name_devanagari}</div>
-                    <div class="card-iast">${s.name_iast}</div>
+                    <div class="card-devanagari">${devanagari}</div>
+                    <div class="card-iast">${iast}</div>
                 `;
                 grid.appendChild(card);
             });
@@ -279,10 +298,12 @@
             
             const listContainer = document.getElementById('sthana-list');
             listContainer.innerHTML = '';
-            if(s.sthanas.length === 0) {
+            
+            const sthanas = s.sthanas || [];
+            if(sthanas.length === 0) {
                 listContainer.innerHTML = '<p style="padding:20px;">Pilot project data mapping ongoing for this text selection.</p>';
             } else {
-                s.sthanas.forEach(st => {
+                sthanas.forEach(st => {
                     const div = document.createElement('div');
                     div.className = 'list-item';
                     div.innerText = st.name;
@@ -318,7 +339,8 @@
             ad.verses.forEach(v => {
                 const div = document.createElement('div');
                 div.className = 'list-item';
-                div.innerHTML = `<strong>${v.number}</strong> - ${v.text.substring(0,30)}...`;
+                const preview = v.text || v.originalVerse || "Verse Data";
+                div.innerHTML = `<strong>${v.number || 'Verse'}</strong> - ${preview.substring(0,30)}...`;
                 div.onclick = () => loadVerseReader(v);
                 listContainer.appendChild(div);
             });
@@ -327,11 +349,11 @@
 
         function loadVerseReader(v) {
             path.verse = v;
-            document.getElementById('reader-verse-text').innerText = v.text;
-            document.getElementById('acc-anvaya').innerText = v.anvaya;
-            document.getElementById('acc-arthas').innerText = v.saralartha_sanskrit;
-            document.getElementById('acc-arthae').innerText = v.saralartha_english;
-            document.getElementById('acc-icd').innerText = v.icd11_mapping;
+            document.getElementById('reader-verse-text').innerText = v.text || v.originalVerse || "";
+            document.getElementById('acc-anvaya').innerText = v.anvaya || "N/A";
+            document.getElementById('acc-arthas').innerText = v.saralartha_sanskrit || (v.saralartha ? v.saralartha.sanskrit : "N/A");
+            document.getElementById('acc-arthae').innerText = v.saralartha_english || (v.saralartha ? v.saralartha.english : "N/A");
+            document.getElementById('acc-icd').innerText = v.icd11_mapping || "N/A";
 
             // Load Padaccheda
             const padaContainer = document.getElementById('padaccheda-container');
@@ -339,7 +361,8 @@
             const padaSelect = document.getElementById('select-comm-pada');
             padaSelect.innerHTML = '';
 
-            v.padaccheda.forEach(p => {
+            const padacchedaList = v.padaccheda || [];
+            padacchedaList.forEach(p => {
                 const span = document.createElement('span');
                 span.className = 'pada-token';
                 span.innerText = p.word;
@@ -361,8 +384,9 @@
             if(!p.hasGrammar) {
                 box.innerHTML = '<strong>Structural delimiter or punctuation marker.</strong>';
             } else {
-                Object.keys(p.grammar).forEach(k => {
-                    box.innerHTML += `<div><strong>${k}:</strong> ${p.grammar[k]}</div>`;
+                const grammarData = p.grammar || {};
+                Object.keys(grammarData).forEach(k => {
+                    box.innerHTML += `<div><strong>${k}:</strong> ${grammarData[k]}</div>`;
                 });
             }
             box.style.display = 'block';
@@ -373,20 +397,29 @@
             const scope = document.getElementById('select-comm-scope').value;
             const padaSelector = document.getElementById('select-comm-pada');
             
+            const comms = path.verse.commentaries || {};
+            const activeComm = comms[source] || { whole: "No commentary track data mapped.", padas: {} };
+
             if(scope === 'pada') {
                 padaSelector.style.display = 'inline-block';
                 const currentPada = padaSelector.value;
-                const txt = path.verse.commentaries[source].padas[currentPada] || "No targeted sub-commentary entry mapped to this specific word component.";
+                const padasComm = activeComm.padas || {};
+                const txt = padasComm[currentPada] || "No targeted sub-commentary entry mapped to this specific word component.";
                 document.getElementById('commentary-text-output').innerText = txt;
             } else {
                 padaSelector.style.display = 'none';
-                document.getElementById('commentary-text-output').innerText = path.verse.commentaries[source].whole;
+                document.getElementById('commentary-text-output').innerText = activeComm.whole || "No text available.";
             }
         }
 
         function toggleAcc(id) {
             const p = document.getElementById(id);
-            p.style.display = (p.style.display === 'block') ? 'none' : 'block';
+            p.style.display = (p.style.display === 'block') ? 'none' : 'none';
+            if (p.style.display === 'none') {
+                p.style.display = 'block';
+            } else {
+                p.style.display = 'none';
+            }
         }
     </script>
 </body>
