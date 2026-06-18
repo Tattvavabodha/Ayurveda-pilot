@@ -243,9 +243,8 @@
     </div>
 
     <script>
-        // CONFIGURATION: Replace with your actual GitHub account username
-        const GITHUB_USER = "Tattvavabodha"; 
-        const DATA_REPO_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/ayurveda-data/main/`;
+        // Directly pointing to your custom repository address configuration layer
+        const DATA_REPO_URL = `https://raw.githubusercontent.com/Tattvavabodha/Tattvavabodha-Data/main/`;
 
         let activeSamhitaData = null;
         let navigationState = { samhita: null, sthana: null, adhyaya: null };
@@ -284,7 +283,6 @@
             renderAdhyayaScreen();
         }
 
-        // Processing Fetch Pipelines across the cloud storage boundary
         function routeToSamhita(samhitaId) {
             fetch(`${DATA_REPO_URL}${samhitaId}.json`)
                 .then(res => {
