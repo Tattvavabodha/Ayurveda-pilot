@@ -3,423 +3,375 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>आयुर्वेदमहोदधिः - Deep Analysis Dashboard</title>
+    <title>आयुर्वेदमहोदधिः</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;700&display=swap');
+        
         :root {
             --maroon: #800000;
-            --cream-bg: #fcfbfa;
-            --card-border: #ebdcc7;
-            --text-dark: #2c2c2c;
+            --bg-cream: #faf7f2;
+            --border-tan: #e6dfd3;
+            --text-dark: #2b2b2b;
         }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: var(--cream-bg);
+            background-color: var(--bg-cream);
             color: var(--text-dark);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px 20px;
-            line-height: 1.7;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .site-title {
-            text-align: center;
+
+        /* Typography Directives */
+        .devanagari-text, h1, .tab-sanskrit, .list-title-sa {
+            font-family: 'Adobe Devanagari', 'Noto Serif Devanagari', Georgia, serif;
+        }
+
+        .roman-text, .tab-transliterated, .list-title-en, .collapsible-body {
+            font-family: 'Amasis MT Pro', 'Segoe UI', Arial, sans-serif;
+        }
+
+        h1.main-title {
             color: var(--maroon);
-            font-size: 2.8rem;
-            margin-bottom: 40px;
+            font-size: 3.2rem;
+            margin-bottom: 45px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .navigation-breadcrumb {
+            width: 100%;
+            max-width: 800px;
+            background: #f0e9dc;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+        .navigation-breadcrumb span {
+            color: var(--maroon);
+            cursor: pointer;
             font-weight: bold;
         }
-        .view-section { display: none; }
-        .view-section.active { display: block; }
-        
-        .box-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+
+        .dashboard-view {
+            display: none;
+            width: 100%;
+            max-width: 800px;
         }
-        .clickable-card {
+        .dashboard-view.active {
+            display: block;
+        }
+
+        /* Tab Layout Style Matrix */
+        .tab-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .action-tab-box {
             background: #ffffff;
-            border: 2px solid var(--card-border);
+            border: 2px solid var(--border-tan);
             border-radius: 8px;
-            padding: 25px;
+            padding: 30px 20px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
-        .clickable-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(128,0,0,0.1);
+        .action-tab-box:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(128, 0, 0, 0.08);
+            border-color: var(--maroon);
         }
-        .card-devanagari {
-            font-size: 1.6rem;
+
+        .tab-sanskrit {
+            font-size: 1.7rem;
             color: var(--maroon);
-            font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
-        .card-iast {
-            font-size: 0.95rem;
+        .tab-transliterated {
+            font-size: 1rem;
             color: #666;
             font-style: italic;
         }
-        .breadcrumb {
-            background: #f1ebd9;
-            padding: 10px 15px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+
+        /* Generic Listing Elements */
+        .data-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .breadcrumb span {
-            color: var(--maroon);
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .list-item {
-            background: #fff;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            border: 1px solid var(--card-border);
+        .interactive-row-item {
+            background: #ffffff;
+            border: 1px solid var(--border-tan);
+            padding: 18px 25px;
             border-radius: 6px;
             cursor: pointer;
+            transition: background 0.15s;
         }
-        .list-item:hover { background: #fffdfa; border-color: var(--maroon); }
+        .interactive-row-item:hover {
+            background: #fffcf7;
+            border-color: var(--maroon);
+        }
 
-        /* Verse Reader Panels */
-        .verse-display {
-            font-size: 1.8rem;
+        /* Reader Screen Layout Engine */
+        .verse-hero-bubble {
+            font-size: 1.9rem;
             text-align: center;
-            background: #fffdf9;
-            border: 1px solid var(--maroon);
-            padding: 30px;
+            background: #fffdfb;
+            border: 1px dashed var(--maroon);
+            padding: 35px;
             border-radius: 8px;
             white-space: pre-line;
+            line-height: 1.8;
+            margin-bottom: 30px;
             color: #111;
-            margin-bottom: 25px;
         }
-        .accordion-menu { margin-top: 15px; }
-        .accordion-btn {
-            background: #eee6dc;
-            color: #4a231a;
-            width: 100%;
-            text-align: left;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 4px;
-            margin-top: 8px;
+
+        /* Collapsible Accordion Element Core */
+        .collapsible-node {
+            border: 1px solid var(--border-tan);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+        .collapsible-header {
+            background: #f5efe4;
+            padding: 14px 20px;
+            font-size: 1.15rem;
+            font-weight: 600;
             cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            color: #3d1f18;
         }
-        .accordion-panel {
-            background: #fff;
-            border: 1px solid #eee6dc;
+        .collapsible-body {
             padding: 20px;
             display: none;
+            border-top: 1px solid var(--border-tan);
+            background: #fffdfc;
+            font-size: 1.1rem;
+            white-space: pre-line;
         }
-        
-        /* Interactive Words */
-        .padaccheda-flex {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            font-size: 1.3rem;
+        .vyakarana-element {
+            padding: 12px 0;
+            border-bottom: 1px dashed #f0e6d2;
         }
-        .pada-token {
-            padding: 4px 10px;
-            background: #f5ece2;
-            border-bottom: 2px solid #cbb69f;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .pada-token:hover { background: #ebdecb; }
-        
-        .grammar-display-box {
-            margin-top: 15px;
-            background: #fff9f2;
-            border-left: 4px solid var(--maroon);
-            padding: 15px;
-            display: none;
-        }
-        .commentary-select-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        select {
-            padding: 8px 12px;
-            font-size: 1rem;
-            border-radius: 4px;
-            border: 1px solid var(--maroon);
+        .vyakarana-element:last-child {
+            border-bottom: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="site-title" id="site-main-title">आयुर्वेदमहोदधिः</div>
-    <div class="breadcrumb" id="breadcrumb-bar" style="display:none;"></div>
+    <h1 class="main-title">आयुर्वेदमहोदधिः</h1>
+    
+    <div class="navigation-breadcrumb" id="breadcrumb" style="display:none;"></div>
 
-    <div id="view-home" class="view-section active">
-        <div class="box-grid" id="samhita-grid"></div>
-    </div>
-
-    <div id="view-sthana" class="view-section">
-        <h2>Select Sthana</h2>
-        <div id="sthana-list"></div>
-    </div>
-
-    <div id="view-adhyaya" class="view-section">
-        <h2>Select Adhyaya</h2>
-        <div id="adhyaya-list"></div>
-    </div>
-
-    <div id="view-verselist" class="view-section">
-        <h2>Select Verse</h2>
-        <div id="verse-list"></div>
-    </div>
-
-    <div id="view-versereader" class="view-section">
-        <div class="verse-display" id="reader-verse-text"></div>
-
-        <div class="accordion-menu">
-            <button class="accordion-btn" onclick="toggleAcc('acc-trans')">Transliteration</button>
-            <div id="acc-trans" class="accordion-panel">Devanagari view complete above. Transliterated layout generated dynamically.</div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-pada')">Padaccheda (Interactive Word Grammar)</button>
-            <div id="acc-pada" class="accordion-panel">
-                <div class="padaccheda-flex" id="padaccheda-container"></div>
-                <div class="grammar-display-box" id="grammar-box"></div>
+    <!-- VIEW 1: Home Screen Selection Matrix -->
+    <div id="screen-home" class="dashboard-view active">
+        <div class="tab-wrapper">
+            <div class="action-tab-box" onclick="routeToSamhita('charaka')">
+                <div class="tab-sanskrit">चरक संहिता</div>
+                <div class="tab-transliterated">Caraka Saṃhitā</div>
             </div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-anvaya')">Anvaya (Prose Order)</button>
-            <div id="acc-anvaya" class="accordion-panel" id="reader-anvaya"></div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-arthas')">Saralartha (Sanskrit)</button>
-            <div id="acc-arthas" class="accordion-panel" id="reader-sanskrit-artha"></div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-arthae')">Saralartha (English)</button>
-            <div id="acc-arthae" class="accordion-panel" id="reader-english-artha"></div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-icd')">WHO ICD-11 Code Mapping</button>
-            <div id="acc-icd" class="accordion-panel" id="reader-icd-code"></div>
-
-            <button class="accordion-btn" onclick="toggleAcc('acc-commentary')">Hermeneutic Commentaries (टीका)</button>
-            <div id="acc-commentary" class="accordion-panel">
-                <div class="commentary-select-container">
-                    <select id="select-comm-source" onchange="renderCommentaryText()">
-                        <option value="sarvangasundara">Sarvangasundara (सर्वाङ्गसुन्दरा)</option>
-                        <option value="ayurvedarasayanam">Ayurvedarasayanam (आयुर्वेदरसायनम्)</option>
-                    </select>
-                    <select id="select-comm-scope" onchange="renderCommentaryText()">
-                        <option value="whole">Commentary on Whole Sutra</option>
-                        <option value="pada">Commentary on Selected Pada</option>
-                    </select>
-                    <select id="select-comm-pada" onchange="renderCommentaryText()" style="display:none;"></select>
-                </div>
-                <div id="commentary-text-output" style="white-space: pre-line; background: #fffdfa; padding: 15px; border: 1px dashed #cbb69f;"></div>
+            <div class="action-tab-box" onclick="routeToSamhita('sushruta')">
+                <div class="tab-sanskrit">सुश्रुत संहिता</div>
+                <div class="tab-transliterated">Suśruta Saṃhitā</div>
+            </div>
+            <div class="action-tab-box" onclick="routeToSamhita('ashtanga')">
+                <div class="tab-sanskrit">अष्टाङ्ग हृदयम्</div>
+                <div class="tab-transliterated">Aṣṭāṅga Hṛdayam</div>
             </div>
         </div>
     </div>
 
+    <!-- VIEW 2: Sthana Listing Matrix -->
+    <div id="screen-sthana" class="dashboard-view">
+        <div class="tab-wrapper" id="sthana-grid-output"></div>
+    </div>
+
+    <!-- VIEW 3: Adhyaya Listing Frame -->
+    <div id="screen-adhyaya" class="dashboard-view">
+        <div class="data-list-container" id="adhyaya-list-output"></div>
+    </div>
+
+    <!-- VIEW 4: Verse Index Engine -->
+    <div id="screen-verse-list" class="dashboard-view">
+        <div class="data-list-container" id="verse-list-output"></div>
+    </div>
+
+    <!-- VIEW 5: Deep Structural Verse Reader Sheets -->
+    <div id="screen-reader" class="dashboard-view">
+        <div class="verse-hero-bubble devanagari-text" id="meta-verse-block"></div>
+
+        <!-- Accordion Display Node Array -->
+        <div class="collapsible-node">
+            <div class="collapsible-header" onclick="triggerToggle('node-pada')">
+                <span class="devanagari-text">पदच्छेदः <span class="roman-text">(Padaccheda - Word Split)</span></span><span>▼</span>
+            </div>
+            <div class="collapsible-body devanagari-text" id="node-pada"></div>
+        </div>
+
+        <div class="collapsible-node">
+            <div class="collapsible-header" onclick="triggerToggle('node-anvaya')">
+                <span class="devanagari-text">अन्वयः <span class="roman-text">(Anvaya - Syntax / Prose Order)</span></span><span>▼</span>
+            </div>
+            <div class="collapsible-body devanagari-text" id="node-anvaya"></div>
+        </div>
+
+        <div class="collapsible-node">
+            <div class="collapsible-header" onclick="triggerToggle('node-artha')">
+                <span class="devanagari-text">सरलार्थः <span class="roman-text">(Saralartha - Simple Meaning)</span></span><span>▼</span>
+            </div>
+            <div class="collapsible-body roman-text" id="node-artha"></div>
+        </div>
+
+        <div class="collapsible-node">
+            <div class="collapsible-header" onclick="triggerToggle('node-vyakarana')">
+                <span class="devanagari-text">व्याकरणम् <span class="roman-text">(Vyakarana - Grammatical Analysis)</span></span><span>▼</span>
+            </div>
+            <div class="collapsible-body roman-text" id="node-vyakarana"></div>
+        </div>
+    </div>
+
     <script>
-        let database = null;
-        let path = { samhita: null, sthana: null, adhyaya: null, verse: null };
+        // CONFIGURATION: Replace with your actual GitHub account username
+        const GITHUB_USER = "Tattvavabodha"; 
+        const DATA_REPO_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/ayurveda-data/main/`;
 
-        // Safer reading script with fallbacks for key names
-        fetch('data.json')
-            .then(res => {
-                if (!res.ok) throw new Error("Could not find data.json file.");
-                return res.json();
-            })
-            .then(data => {
-                database = data;
-                // Fallback safe assignment
-                const title = data.site_title || data.title || "आयुर्वेदमहोदधिः";
-                document.getElementById('site-main-title').innerText = title;
-                initHome();
-            })
-            .catch(err => {
-                console.error(err);
-                document.getElementById('samhita-grid').innerHTML = `<p style="color:red; font-weight:bold; text-align:center;">Error loading data file. Make sure your data file is exactly named "data.json" and contains valid text structure.</p>`;
-            });
+        let activeSamhitaData = null;
+        let navigationState = { samhita: null, sthana: null, adhyaya: null };
 
-        function showView(viewId) {
-            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
-            document.getElementById(viewId).classList.add('active');
-            updateBreadcrumb();
+        function switchDisplay(screenId) {
+            document.querySelectorAll('.dashboard-view').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            renderBreadcrumb();
         }
 
-        function updateBreadcrumb() {
-            const bar = document.getElementById('breadcrumb-bar');
-            if (!path.samhita) { bar.style.display = 'none'; return; }
-            bar.style.display = 'block';
-            let html = `<span onclick="resetToHome()">Home</span>`;
-            if (path.samhita) {
-                const sName = path.samhita.name_devanagari || path.samhita.title || "Samhita";
-                html += ` &gt; <span onclick="loadSamhita('${path.samhita.id}')">${sName}</span>`;
-            }
-            if (path.sthana) html += ` &gt; <span onclick="loadSthana('${path.sthana.name}')">${path.sthana.name}</span>`;
-            if (path.adhyaya) html += ` &gt; <span onclick="loadAdhyaya('${path.adhyaya.name}')">${path.adhyaya.name.split(':')[0]}</span>`;
-            bar.innerHTML = html;
+        function renderBreadcrumb() {
+            const crumbs = document.getElementById('breadcrumb');
+            if (!navigationState.samhita) { crumbs.style.display = 'none'; return; }
+            crumbs.style.display = 'block';
+
+            let layoutString = `<span onclick="clearToHome()">Home</span>`;
+            if(navigationState.samhita) layoutString += ` &gt; <span onclick="backToSamhita()">${navigationState.samhita}</span>`;
+            if(navigationState.sthana) layoutString += ` &gt; <span onclick="backToSthana()">${navigationState.sthana.name_devanagari}</span>`;
+            if(navigationState.adhyaya) layoutString += ` &gt; <span>${navigationState.adhyaya.name_devanagari}</span>`;
+            crumbs.innerHTML = layoutString;
         }
 
-        function resetToHome() {
-            path = { samhita: null, sthana: null, adhyaya: null, verse: null };
-            showView('view-home');
+        function clearToHome() {
+            navigationState = { samhita: null, sthana: null, adhyaya: null };
+            activeSamhitaData = null;
+            switchDisplay('screen-home');
         }
 
-        function initHome() {
-            const grid = document.getElementById('samhita-grid');
+        function backToSamhita() {
+            navigationState.sthana = null; navigationState.adhyaya = null;
+            renderSthanaScreen();
+        }
+
+        function backToSthana() {
+            navigationState.adhyaya = null;
+            renderAdhyayaScreen();
+        }
+
+        // Processing Fetch Pipelines across the cloud storage boundary
+        function routeToSamhita(samhitaId) {
+            fetch(`${DATA_REPO_URL}${samhitaId}.json`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Target data registry path mapping failure.");
+                    return res.json();
+                })
+                .then(payload => {
+                    activeSamhitaData = payload;
+                    navigationState.samhita = payload.name_devanagari;
+                    renderSthanaScreen();
+                })
+                .catch(err => {
+                    alert("This text registry is initializing. Try selecting 'Aṣṭāṅga Hṛdayam' to evaluate the data map.");
+                });
+        }
+
+        function renderSthanaScreen() {
+            const grid = document.getElementById('sthana-grid-output');
             grid.innerHTML = '';
-            
-            const samhitasList = database.samhitas || [];
-            if(samhitasList.length === 0) {
-                grid.innerHTML = "<p>No texts found in the database layer.</p>";
-                return;
-            }
-
-            samhitasList.forEach(s => {
-                const card = document.createElement('div');
-                card.className = 'clickable-card';
-                card.onclick = () => loadSamhita(s.id);
-                
-                const devanagari = s.name_devanagari || s.title || "Text Name";
-                const iast = s.name_iast || "";
-                
-                card.innerHTML = `
-                    <div class="card-devanagari">${devanagari}</div>
-                    <div class="card-iast">${iast}</div>
+            activeSamhitaData.sthanas.forEach(st => {
+                const box = document.createElement('div');
+                box.className = 'action-tab-box';
+                box.onclick = () => { navigationState.sthana = st; renderAdhyayaScreen(); };
+                box.innerHTML = `
+                    <div class="tab-sanskrit">${st.name_devanagari}</div>
+                    <div class="tab-transliterated">${st.name_iast}</div>
                 `;
-                grid.appendChild(card);
+                grid.appendChild(box);
             });
+            switchDisplay('screen-sthana');
         }
 
-        function loadSamhita(id) {
-            const s = database.samhitas.find(x => x.id === id);
-            path.samhita = s; path.sthana = null; path.adhyaya = null; path.verse = null;
+        function renderAdhyayaScreen() {
+            const container = document.getElementById('adhyaya-list-output');
+            container.innerHTML = '';
             
-            const listContainer = document.getElementById('sthana-list');
-            listContainer.innerHTML = '';
-            
-            const sthanas = s.sthanas || [];
-            if(sthanas.length === 0) {
-                listContainer.innerHTML = '<p style="padding:20px;">Pilot project data mapping ongoing for this text selection.</p>';
+            if(navigationState.sthana.adhyayas.length === 0) {
+                container.innerHTML = "<p style='padding:20px;'>Parsing configuration pipeline continuing for this structural block.</p>";
             } else {
-                sthanas.forEach(st => {
-                    const div = document.createElement('div');
-                    div.className = 'list-item';
-                    div.innerText = st.name;
-                    div.onclick = () => loadSthana(st.name);
-                    listContainer.appendChild(div);
+                navigationState.sthana.adhyayas.forEach(ad => {
+                    const row = document.createElement('div');
+                    row.className = 'interactive-row-item devanagari-text';
+                    row.style.fontSize = '1.35rem';
+                    row.innerText = ad.name_devanagari;
+                    row.onclick = () => { navigationState.adhyaya = ad; renderVerseIndexScreen(); };
+                    container.appendChild(row);
                 });
             }
-            showView('view-sthana');
+            switchDisplay('screen-adhyaya');
         }
 
-        function loadSthana(sthanaName) {
-            const st = path.samhita.sthanas.find(x => x.name === sthanaName);
-            path.sthana = st; path.adhyaya = null; path.verse = null;
-            
-            const listContainer = document.getElementById('adhyaya-list');
-            listContainer.innerHTML = '';
-            st.adhyayas.forEach(ad => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                div.innerText = ad.name;
-                div.onclick = () => loadAdhyaya(ad.name);
-                listContainer.appendChild(div);
+        function renderVerseIndexScreen() {
+            const container = document.getElementById('verse-list-output');
+            container.innerHTML = '';
+            navigationState.adhyaya.verses.forEach(v => {
+                const row = document.createElement('div');
+                row.className = 'interactive-row-item devanagari-text';
+                row.innerHTML = `<strong>${v.number}</strong> - <span style="font-size:1.15rem; color:#555;">${v.original.substring(0,35).replace('\n',' ')}...</span>`;
+                row.onclick = () => loadVerseReaderDashboard(v);
+                container.appendChild(row);
             });
-            showView('view-adhyaya');
+            switchDisplay('screen-verse-list');
         }
 
-        function loadAdhyaya(adhyayaName) {
-            const ad = path.sthana.adhyayas.find(x => x.name === adhyayaName);
-            path.adhyaya = ad; path.verse = null;
-            
-            const listContainer = document.getElementById('verse-list');
-            listContainer.innerHTML = '';
-            ad.verses.forEach(v => {
-                const div = document.createElement('div');
-                div.className = 'list-item';
-                const preview = v.text || v.originalVerse || "Verse Data";
-                div.innerHTML = `<strong>${v.number || 'Verse'}</strong> - ${preview.substring(0,30)}...`;
-                div.onclick = () => loadVerseReader(v);
-                listContainer.appendChild(div);
-            });
-            showView('view-verselist');
-        }
+        function loadVerseReaderDashboard(v) {
+            document.getElementById('meta-verse-block').innerText = v.original;
+            document.getElementById('node-pada').innerText = v.padaccheda;
+            document.getElementById('node-anvaya').innerText = v.anvaya;
+            document.getElementById('node-artha').innerText = v.saralartha;
 
-        function loadVerseReader(v) {
-            path.verse = v;
-            document.getElementById('reader-verse-text').innerText = v.text || v.originalVerse || "";
-            document.getElementById('acc-anvaya').innerText = v.anvaya || "N/A";
-            document.getElementById('acc-arthas').innerText = v.saralartha_sanskrit || (v.saralartha ? v.saralartha.sanskrit : "N/A");
-            document.getElementById('acc-arthae').innerText = v.saralartha_english || (v.saralartha ? v.saralartha.english : "N/A");
-            document.getElementById('acc-icd').innerText = v.icd11_mapping || "N/A";
-
-            // Load Padaccheda
-            const padaContainer = document.getElementById('padaccheda-container');
-            padaContainer.innerHTML = '';
-            const padaSelect = document.getElementById('select-comm-pada');
-            padaSelect.innerHTML = '';
-
-            const padacchedaList = v.padaccheda || [];
-            padacchedaList.forEach(p => {
-                const span = document.createElement('span');
-                span.className = 'pada-token';
-                span.innerText = p.word;
-                span.onclick = () => displayGrammar(p);
-                padaContainer.appendChild(span);
-
-                const opt = document.createElement('option');
-                opt.value = p.word; opt.innerText = p.word;
-                padaSelect.appendChild(opt);
+            const vyakaranaBox = document.getElementById('node-vyakarana');
+            vyakaranaBox.innerHTML = '';
+            v.vyakarana.forEach(termHtml => {
+                const el = document.createElement('div');
+                el.className = 'vyakarana-element';
+                el.innerHTML = termHtml;
+                vyakaranaBox.appendChild(el);
             });
 
-            renderCommentaryText();
-            showView('view-versereader');
+            // Collapse all elements before displaying
+            document.querySelectorAll('.collapsible-body').forEach(b => b.style.display = 'none');
+            switchDisplay('screen-reader');
         }
 
-        function displayGrammar(p) {
-            const box = document.getElementById('grammar-box');
-            box.innerHTML = '';
-            if(!p.hasGrammar) {
-                box.innerHTML = '<strong>Structural delimiter or punctuation marker.</strong>';
-            } else {
-                const grammarData = p.grammar || {};
-                Object.keys(grammarData).forEach(k => {
-                    box.innerHTML += `<div><strong>${k}:</strong> ${grammarData[k]}</div>`;
-                });
-            }
-            box.style.display = 'block';
-        }
-
-        function renderCommentaryText() {
-            const source = document.getElementById('select-comm-source').value;
-            const scope = document.getElementById('select-comm-scope').value;
-            const padaSelector = document.getElementById('select-comm-pada');
-            
-            const comms = path.verse.commentaries || {};
-            const activeComm = comms[source] || { whole: "No commentary track data mapped.", padas: {} };
-
-            if(scope === 'pada') {
-                padaSelector.style.display = 'inline-block';
-                const currentPada = padaSelector.value;
-                const padasComm = activeComm.padas || {};
-                const txt = padasComm[currentPada] || "No targeted sub-commentary entry mapped to this specific word component.";
-                document.getElementById('commentary-text-output').innerText = txt;
-            } else {
-                padaSelector.style.display = 'none';
-                document.getElementById('commentary-text-output').innerText = activeComm.whole || "No text available.";
-            }
-        }
-
-        function toggleAcc(id) {
-            const p = document.getElementById(id);
-            p.style.display = (p.style.display === 'block') ? 'none' : 'none';
-            if (p.style.display === 'none') {
-                p.style.display = 'block';
-            } else {
-                p.style.display = 'none';
-            }
+        function triggerToggle(id) {
+            const panel = document.getElementById(id);
+            panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
         }
     </script>
 </body>
