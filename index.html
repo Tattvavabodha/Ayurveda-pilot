@@ -175,7 +175,6 @@
     
     <div class="navigation-breadcrumb" id="breadcrumb" style="display:none;"></div>
 
-    <!-- VIEW 1: Home Screen Selection Matrix -->
     <div id="screen-home" class="dashboard-view active">
         <div class="tab-wrapper">
             <div class="action-tab-box" onclick="routeToSamhita('charaka')">
@@ -193,26 +192,21 @@
         </div>
     </div>
 
-    <!-- VIEW 2: Sthana Listing Matrix -->
     <div id="screen-sthana" class="dashboard-view">
         <div class="tab-wrapper" id="sthana-grid-output"></div>
     </div>
 
-    <!-- VIEW 3: Adhyaya Listing Frame -->
     <div id="screen-adhyaya" class="dashboard-view">
         <div class="data-list-container" id="adhyaya-list-output"></div>
     </div>
 
-    <!-- VIEW 4: Verse Index Engine -->
     <div id="screen-verse-list" class="dashboard-view">
         <div class="data-list-container" id="verse-list-output"></div>
     </div>
 
-    <!-- VIEW 5: Deep Structural Verse Reader Sheets -->
     <div id="screen-reader" class="dashboard-view">
         <div class="verse-hero-bubble devanagari-text" id="meta-verse-block"></div>
 
-        <!-- Accordion Display Node Array -->
         <div class="collapsible-node">
             <div class="collapsible-header" onclick="triggerToggle('node-pada')">
                 <span class="devanagari-text">पदच्छेदः <span class="roman-text">(Padaccheda - Word Split)</span></span><span>▼</span>
@@ -243,7 +237,7 @@
     </div>
 
     <script>
-        // Directly pointing to your custom repository address configuration layer
+        // Pointing cleanly to your Tattvavabodha cloud folder URL link
         const DATA_REPO_URL = `https://raw.githubusercontent.com/Tattvavabodha/Tattvavabodha-Data/main/`;
 
         let activeSamhitaData = null;
@@ -286,7 +280,7 @@
         function routeToSamhita(samhitaId) {
             fetch(`${DATA_REPO_URL}${samhitaId}.json`)
                 .then(res => {
-                    if (!res.ok) throw new Error("Target data registry path mapping failure.");
+                    if (!res.ok) throw new Error("File not found on repository path.");
                     return res.json();
                 })
                 .then(payload => {
@@ -295,23 +289,29 @@
                     renderSthanaScreen();
                 })
                 .catch(err => {
-                    alert("This text registry is initializing. Try selecting 'Aṣṭāṅga Hṛdayam' to evaluate the data map.");
+                    alert(`Could not load "${samhitaId}.json" file. Ensure it exists inside your data repository with valid JSON formatting.`);
                 });
         }
 
         function renderSthanaScreen() {
             const grid = document.getElementById('sthana-grid-output');
             grid.innerHTML = '';
-            activeSamhitaData.sthanas.forEach(st => {
-                const box = document.createElement('div');
-                box.className = 'action-tab-box';
-                box.onclick = () => { navigationState.sthana = st; renderAdhyayaScreen(); };
-                box.innerHTML = `
-                    <div class="tab-sanskrit">${st.name_devanagari}</div>
-                    <div class="tab-transliterated">${st.name_iast}</div>
-                `;
-                grid.appendChild(box);
-            });
+            
+            const sthanas = activeSamhitaData.sthanas || [];
+            if (sthanas.length === 0) {
+                grid.innerHTML = "<p style='padding:20px; text-align:center; width:100%;'>No sthanas found in this data file yet.</p>";
+            } else {
+                sthanas.forEach(st => {
+                    const box = document.createElement('div');
+                    box.className = 'action-tab-box';
+                    box.onclick = () => { navigationState.sthana = st; renderAdhyayaScreen(); };
+                    box.innerHTML = `
+                        <div class="tab-sanskrit">${st.name_devanagari}</div>
+                        <div class="tab-transliterated">${st.name_iast || ''}</div>
+                    `;
+                    grid.appendChild(box);
+                });
+            }
             switchDisplay('screen-sthana');
         }
 
@@ -319,10 +319,11 @@
             const container = document.getElementById('adhyaya-list-output');
             container.innerHTML = '';
             
-            if(navigationState.sthana.adhyayas.length === 0) {
+            const adhyayas = navigationState.sthana.adhyayas || [];
+            if(adhyayas.length === 0) {
                 container.innerHTML = "<p style='padding:20px;'>Parsing configuration pipeline continuing for this structural block.</p>";
             } else {
-                navigationState.sthana.adhyayas.forEach(ad => {
+                adhyayas.forEach(ad => {
                     const row = document.createElement('div');
                     row.className = 'interactive-row-item devanagari-text';
                     row.style.fontSize = '1.35rem';
@@ -337,32 +338,44 @@
         function renderVerseIndexScreen() {
             const container = document.getElementById('verse-list-output');
             container.innerHTML = '';
-            navigationState.adhyaya.verses.forEach(v => {
-                const row = document.createElement('div');
-                row.className = 'interactive-row-item devanagari-text';
-                row.innerHTML = `<strong>${v.number}</strong> - <span style="font-size:1.15rem; color:#555;">${v.original.substring(0,35).replace('\n',' ')}...</span>`;
-                row.onclick = () => loadVerseReaderDashboard(v);
-                container.appendChild(row);
-            });
+            
+            const verses = navigationState.adhyaya.verses || [];
+            if (verses.length === 0) {
+                container.innerHTML = "<p style='padding:20px;'>No verses found inside this chapter placeholder block yet.</p>";
+            } else {
+                verses.forEach(v => {
+                    const row = document.createElement('div');
+                    row.className = 'interactive-row-item devanagari-text';
+                    row.innerHTML = `<strong>${v.number}</strong> - <span style="font-size:1.15rem; color:#555;">${v.original.substring(0,35).replace('\n',' ')}...</span>`;
+                    row.onclick = () => loadVerseReaderDashboard(v);
+                    container.appendChild(row);
+                });
+            }
             switchDisplay('screen-verse-list');
         }
 
         function loadVerseReaderDashboard(v) {
             document.getElementById('meta-verse-block').innerText = v.original;
-            document.getElementById('node-pada').innerText = v.padaccheda;
-            document.getElementById('node-anvaya').innerText = v.anvaya;
-            document.getElementById('node-artha').innerText = v.saralartha;
+            document.getElementById('node-pada').innerText = v.padaccheda || "N/A";
+            document.getElementById('node-anvaya').innerText = v.anvaya || "N/A";
+            document.getElementById('node-artha').innerText = v.saralartha || "N/A";
 
             const vyakaranaBox = document.getElementById('node-vyakarana');
             vyakaranaBox.innerHTML = '';
-            v.vyakarana.forEach(termHtml => {
-                const el = document.createElement('div');
-                el.className = 'vyakarana-element';
-                el.innerHTML = termHtml;
-                vyakaranaBox.appendChild(el);
-            });
+            const vyakaranaList = v.vyakarana || [];
+            
+            if (vyakaranaList.length === 0) {
+                vyakaranaBox.innerHTML = "No grammatical analysis provided for this entry.";
+            } else {
+                vyakaranaList.forEach(termHtml => {
+                    const el = document.createElement('div');
+                    el.className = 'vyakarana-element';
+                    el.innerHTML = termHtml;
+                    vyakaranaBox.appendChild(el);
+                });
+            }
 
-            // Collapse all elements before displaying
+            // Collapse elements cleanly at view transition
             document.querySelectorAll('.collapsible-body').forEach(b => b.style.display = 'none');
             switchDisplay('screen-reader');
         }
